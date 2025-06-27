@@ -29,3 +29,9 @@ services:
       context: ./py-app
     ports:
       - "3005:3000"
+
+  java-vertx-app:
+    build:
+      context: ./java-vertx-app
+    ports:
+      - "3006:3000"

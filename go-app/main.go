@@ -1,7 +1,8 @@
 package main
 
+import "github.com/go-chi/chi/v5"
+
 import (
-	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -13,13 +14,14 @@ func main() {
 		port = "3000"
 	}
 
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintln(w, "Hello, world!")
+	r := chi.NewRouter()
+
+	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
+		w.WriteHeader(http.StatusOK)
+		w.Write([]byte("Hello, world!\n"))
 	})
 
 	log.Printf("Server running on port %s", port)
-	err := http.ListenAndServe(":" + port, nil)
-	if err != nil {
-		log.Fatal(err)
-	}
+	http.ListenAndServe(":" + port, r)
 }

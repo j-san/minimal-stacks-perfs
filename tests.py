@@ -22,11 +22,14 @@ def main():
         "name": "rust",
         "addr": "http://localhost:3003",
     }, {
-        "name": "java",
+        "name": "java spr",
         "addr": "http://localhost:3004",
     }, {
         "name": "python",
         "addr": "http://localhost:3005",
+    }, {
+        "name": "java vrtx",
+        "addr": "http://localhost:3006",
     }]
 
     first = True
