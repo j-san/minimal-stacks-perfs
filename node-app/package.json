@@ -1,0 +1,13 @@
+{
+  "name": "minimal-express-app",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "pm2 start --no-daemon  -i 4 index.js"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "pm2": "^6.0.8"
+  }
+}

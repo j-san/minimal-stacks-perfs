@@ -1,0 +1,31 @@
+
+services:
+  node-app:
+    build:
+      context: ./node-app
+    ports:
+      - "3001:3000"
+
+  go-app:
+    build:
+      context: ./go-app
+    ports:
+      - "3002:3000"
+
+  rust-app:
+    build:
+      context: ./rust-app
+    ports:
+      - "3003:3000"
+
+  java-app:
+    build:
+      context: ./java-app
+    ports:
+      - "3004:3000"
+
+  py-app:
+    build:
+      context: ./py-app
+    ports:
+      - "3005:3000"
