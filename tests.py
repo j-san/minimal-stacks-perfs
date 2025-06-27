@@ -12,39 +12,67 @@ def main():
     parser.add_argument('-v', '--verbose', action='store_true')
     args = parser.parse_args()
 
-    servers = {
-        "node": "http://localhost:3001",
-        "go": "http://localhost:3002",
-        "rust": "http://localhost:3003",
-        "java": "http://localhost:3004",
-        "python": "http://localhost:3005",
-    }
+    servers = [{
+        "name": "node",
+        "addr": "http://localhost:3001",
+    }, {
+        "name": "go",
+        "addr": "http://localhost:3002",
+    }, {
+        "name": "rust",
+        "addr": "http://localhost:3003",
+    }, {
+        "name": "java",
+        "addr": "http://localhost:3004",
+    }, {
+        "name": "python",
+        "addr": "http://localhost:3005",
+    }]
 
-    for lng, srv in servers.items():
-        print(f"\n\n### Running load test for {lng}:\n")
+    first = True
+    for srv in servers:
+        if not first:
+            print()
+            print("-" * 10)
+            # make sure the processor is idle
+            time.sleep(10)
+        else:
+            first = False
+
+        print(f"\n\n### Running load test for {srv["name"]}:\n")
 
         if args.verbose:
-            cmd = f"curl -s -D - {srv}"
+            cmd = f"curl -s -D - {srv["addr"]}"
             print(cmd)
             results = os.popen(cmd).read()
             print(results)
             print("\n\n")
 
-        cmd = f"hey -n 100000 -c 100 {srv}"
+        cmd = f"hey -n 1000000 -c 100 {srv["addr"]}"
         results = os.popen(cmd).read()
 
         print(cmd)
-        total = re.search(r"Total:\s+([0-9.]+)\s+secs", results).group(1)
-        avg = re.search(r"Average:\s+([0-9.]+)\s+secs", results).group(1)
+        total = float(re.search(r"Total:\s+([0-9.]+)\s+secs", results).group(1))
+        avg = float(re.search(r"Average:\s+([0-9.]+)\s+secs", results).group(1))
 
         if args.verbose:
             print(results)
 
         print(f"Total time: {total}")
         print(f"Avg response time: {avg}")
-        print()
-        print("-" * 10)
-        time.sleep(3)
+        srv["total"] = total
+        srv["avg"] = avg
+
+    print("\n")
+
+    print("-" * 120)
+    max_total_time = max(srv["total"] for srv in servers)
+    servers = sorted(servers, key=lambda srv: srv["total"])
+
+    for srv in servers:
+        srv["ratio"] = srv["total"] / max_total_time
+        print(f"{srv["name"]:<9}", f"{srv["total"]:<9}", "#" * int(srv["ratio"] * 100))
+    print("-" * 120)
 
 
 if __name__ == "__main__":

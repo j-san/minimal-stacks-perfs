@@ -18,47 +18,54 @@ Then updated dependencies and made some fixes manually.
 ```
 ### Running load test for node:
 
-hey -n 100000 -c 100 http://localhost:3001
-Total time: 7.9152
-Avg response time: 0.0078
+hey -n 1000000 -c 100 http://localhost:3001
+Total time: 77.241
+Avg response time: 0.0077
 
 ----------
 
 
 ### Running load test for go:
 
-hey -n 100000 -c 100 http://localhost:3002
-Total time: 3.8102
-Avg response time: 0.0038
+hey -n 1000000 -c 100 http://localhost:3002
+Total time: 36.1215
+Avg response time: 0.0036
 
 ----------
 
 
 ### Running load test for rust:
 
-hey -n 100000 -c 100 http://localhost:3003
-Total time: 4.0084
-Avg response time: 0.0040
+hey -n 1000000 -c 100 http://localhost:3003
+Total time: 35.5431
+Avg response time: 0.0036
 
 ----------
 
 
 ### Running load test for java:
 
-hey -n 100000 -c 100 http://localhost:3004
-Total time: 4.9757
-Avg response time: 0.0049
+hey -n 1000000 -c 100 http://localhost:3004
+Total time: 43.2438
+Avg response time: 0.0043
 
 ----------
 
 
 ### Running load test for python:
 
-hey -n 100000 -c 100 http://localhost:3005
-Total time: 4.7259
-Avg response time: 0.0047
+hey -n 1000000 -c 100 http://localhost:3005
+Total time: 41.8454
+Avg response time: 0.0041
 
-----------
+
+------------------------------------------------------------------------------------------------------------------------
+rust      35.5431   ##############################################
+go        36.1215   ##############################################
+python    41.8454   ######################################################
+java      43.2438   #######################################################
+node      77.241    ####################################################################################################
+------------------------------------------------------------------------------------------------------------------------
 ```
 
 Run the test:
